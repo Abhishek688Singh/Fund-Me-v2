@@ -4,8 +4,7 @@ pragma solidity 0.8.30;
 import {Test} from "forge-std/Test.sol";
 import {FundMe} from "../../src/FundMe.sol";
 import {DeployFundMe} from "../../script/DeployFundMe.s.sol";
-import {IntractionFundMe, IntractionWithdraw } from "../../script/Interaction.s.sol";
-
+import {IntractionFundMe, IntractionWithdraw} from "../../script/Interaction.s.sol";
 
 //here we testing IntractionTest.t.sol  , so firstly we have to deploy this IntractionFundMe contract
 
@@ -19,7 +18,7 @@ contract IntractionsTest is Test {
     uint256 STARTING_BALANCE = 10 ether;
     uint256 constant GAS_PRICE = 1;
 
-    function  setUp() public {
+    function setUp() public {
         DeployFundMe deployFundMe = new DeployFundMe();
         fundMe = deployFundMe.run();
         deal(USER, STARTING_BALANCE);

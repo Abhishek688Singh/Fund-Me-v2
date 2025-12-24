@@ -9,28 +9,25 @@ error FundMe__NotOwner();
 contract FundMe {
     using PriceConverter for uint256; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!--
 
-
     address[] private s_funders; //KEEP TRACKING OF FUNDERS
     mapping(address funder => uint256 amountFunded) private s_addressToAmountFunded;
     AggregatorV3Interface private s_priceFeedAddress; //storage variable
     address private immutable i_owner;
 
-
     uint256 public minimumUSD; //usd
 
-    constructor(address _priceFeedAddress /* uint256 _minimumUSD */) {
+    constructor(
+        address _priceFeedAddress /* uint256 _minimumUSD */
+    ) {
         i_owner = msg.sender;
-        minimumUSD = 5e18 /* _minimumUSD */;
+        minimumUSD = 5e18; /* _minimumUSD */
         s_priceFeedAddress = AggregatorV3Interface(_priceFeedAddress);
     }
 
     function fund() public payable {
         // -----------------IMPORTANT-------------
         // here msg.value  is the first parameter for function getConversionRate
-        require(
-            msg.value.getConversionRate(s_priceFeedAddress) > minimumUSD,
-            "Not enough ETH sended"
-        );
+        require(msg.value.getConversionRate(s_priceFeedAddress) > minimumUSD, "Not enough ETH sended");
 
         s_funders.push(msg.sender);
         s_addressToAmountFunded[msg.sender] += msg.value;
@@ -94,9 +91,7 @@ contract FundMe {
      * write these for private storage variable
      */
 
-    function getAddressToAmountFunded(
-        address fundingAddress
-    ) external view returns (uint256) {
+    function getAddressToAmountFunded(address fundingAddress) external view returns (uint256) {
         return s_addressToAmountFunded[fundingAddress];
     }
 
@@ -104,7 +99,7 @@ contract FundMe {
         return s_funders[index];
     }
 
-    function getOwner() external view returns(address){
-        return  i_owner;
+    function getOwner() external view returns (address) {
+        return i_owner;
     }
 }

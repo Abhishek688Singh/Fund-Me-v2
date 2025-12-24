@@ -59,7 +59,7 @@ contract FundMeTest is Test {
         //fundMe.fund{value:....}();
     }
 
-    function testForAddressToAmountFundedDataStructure() public /* funded */{
+    function testForAddressToAmountFundedDataStructure() public /* funded */  {
         vm.prank(USER); //NEXT txn will send by USER
         fundMe.fund{value: SEND_VALUE}(); //1st txn to contract
 
@@ -106,25 +106,22 @@ contract FundMeTest is Test {
         uint256 endingFundMeBalance = address(fundMe).balance;
 
         assertEq(endingFundMeBalance, 0);
-        assertEq(
-            startingOwnerBalance + startingFundMeBalance,
-            endingOwnerBalance
-        );
+        assertEq(startingOwnerBalance + startingFundMeBalance, endingOwnerBalance);
     }
 
     function testWidrawWithManyFunderCheaper() public {
         //Arrange
-        uint160 numberOfFunders = 10;//i --> used to iterate as address
+        uint160 numberOfFunders = 10; //i --> used to iterate as address
         uint160 startingFunderIndex = 1;
 
-        for(uint160 i = startingFunderIndex; i <= numberOfFunders; i++){
-            //vm.prank() 
+        for (uint160 i = startingFunderIndex; i <= numberOfFunders; i++) {
+            //vm.prank()
             //vm.deal(,)  or deal(,)
             hoax(address(i), STARTING_BALANCE);
-            fundMe.fund{value: STARTING_BALANCE}();//funded by all address from 1-->10
+            fundMe.fund{value: STARTING_BALANCE}(); //funded by all address from 1-->10
         }
         uint256 startingOwnerBalance = fundMe.getOwner().balance;
-        uint256 startingFundMeBalance = address(fundMe).balance; 
+        uint256 startingFundMeBalance = address(fundMe).balance;
 
         //Act
         vm.startPrank(fundMe.getOwner());
@@ -136,26 +133,22 @@ contract FundMeTest is Test {
         uint256 endingFundMeBalance = address(fundMe).balance;
 
         assertEq(endingFundMeBalance, 0);
-        assertEq(
-            startingOwnerBalance + startingFundMeBalance,
-            endingOwnerBalance
-        );
-
+        assertEq(startingOwnerBalance + startingFundMeBalance, endingOwnerBalance);
     }
 
     function testWidrawWithManyFunder() public {
         //Arrange
-        uint160 numberOfFunders = 10;//i --> used to iterate as address
+        uint160 numberOfFunders = 10; //i --> used to iterate as address
         uint160 startingFunderIndex = 1;
 
-        for(uint160 i = startingFunderIndex; i <= numberOfFunders; i++){
-            //vm.prank() 
+        for (uint160 i = startingFunderIndex; i <= numberOfFunders; i++) {
+            //vm.prank()
             //vm.deal(,)  or deal(,)
             hoax(address(i), STARTING_BALANCE);
-            fundMe.fund{value: STARTING_BALANCE}();//funded by all address from 1-->10
+            fundMe.fund{value: STARTING_BALANCE}(); //funded by all address from 1-->10
         }
         uint256 startingOwnerBalance = fundMe.getOwner().balance;
-        uint256 startingFundMeBalance = address(fundMe).balance; 
+        uint256 startingFundMeBalance = address(fundMe).balance;
 
         //Act
         vm.startPrank(fundMe.getOwner());
@@ -167,10 +160,6 @@ contract FundMeTest is Test {
         uint256 endingFundMeBalance = address(fundMe).balance;
 
         assertEq(endingFundMeBalance, 0);
-        assertEq(
-            startingOwnerBalance + startingFundMeBalance,
-            endingOwnerBalance
-        );
-
+        assertEq(startingOwnerBalance + startingFundMeBalance, endingOwnerBalance);
     }
 }
